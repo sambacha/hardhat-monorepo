@@ -1,3 +1,11 @@
 # General
 node_modules
 .DS_STORE
+*.log
+*.cache/
+cache/
+build/
+dist/
+tmp/
+_dev/
+
