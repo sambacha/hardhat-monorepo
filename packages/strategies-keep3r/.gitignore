@@ -16,3 +16,4 @@ gasReporterOutput.json
 
 # Config files
 .env
+tmp/

@@ -1,5 +1,6 @@
 {
-  "name": "root",
+  "name": "@yearn/monorepo",
+  "version": "0.1.0",
   "private": true,
   "workspaces": [
     "packages/**"
@@ -65,7 +66,8 @@
     "ts-node": "10.4.0",
     "tsconfig-paths": "3.12.0",
     "typechain": "6.0.3",
-    "typescript": "4.5.2"
+    "typescript": "4.5.2",
+    "turbo": "latest"
   },
   "dependencies": {
     "@yearn/commons": "file:packages/commons",
@@ -80,6 +82,50 @@
     ]
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --parallel --continue",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "turbo": {
+    "pipeline": {
+      "compile": {
+        "outputs": [
+        "artifacts/**"
+        ]
+      },
+      "build": {
+
+        "outputs": [
+          "artifacts/**",
+          "cache/**",
+          "dist/**"
+        ],
+        "dependsOn": [
+          "^build"
+        ]
+      },
+      "test": {
+        "outputs": [
+          "coverage/**"
+        ],
+        "dependsOn": []
+      },
+      "lint": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": []
+      },
+      "dev": {
+        "cache": false
+      },
+      "clean": {
+        "cache": false
+      }
+    }
   }
 }
